@@ -35,5 +35,8 @@ function init(){
   });
   canvas.width = width;
   canvas.height = height;
+  ctx.font = "Press Start 2P";
+  ctx.textBaseline = "top";
+  ctx.fillStyle = "#FFDD00"; // font color
   images.background = createImage("filler_background.png");
 }
