@@ -1,3 +1,5 @@
+"use strict";
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -16,10 +18,13 @@ function createImage(path){
   imagesNeeded++;
   img.onload = () => imagesLoaded++;
   img.src = "images/" + path;
+  return img;
 }
 
 // called once when the game starts
 function init(){
+  canvas.width = width;
+  canvas.height = height;
   images.background = createImage("filler_background.png");
 }
 
