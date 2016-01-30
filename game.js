@@ -38,7 +38,8 @@ function init(){
   ctx.font = "24px Lucida Console";
   ctx.textBaseline = "top";
   ctx.fillStyle = "#FFDD00"; // font color
-  images.background = createImage("filler_background.png");
+  images.menubackground = createImage("filler_background.png");
+  images.slotsbackground = createImage("background.png");
   images.spinning = createImage("filler_spinning.png");
   images.symbol = createImage("filler_symbol.png");
 }

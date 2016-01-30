@@ -2,7 +2,7 @@
 
 // called once per frame for main main
 function mainMenuUpdate(){
-  ctx.drawImage(images.background, 0, 0);
+  ctx.drawImage(images.menubackground, 0, 0);
 }
 
 // called when the mouse is moved

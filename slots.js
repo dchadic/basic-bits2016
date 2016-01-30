@@ -6,7 +6,7 @@ var coins = 100;
 
 // called each frame in the slots view
 function slotsUpdate(){
-  ctx.drawImage(images.background, 0, 0);
+  ctx.drawImage(images.slotsbackground, 0, 0);
   if(payoutRemaining > 0){
     payoutRemaining--;
     coins++;
