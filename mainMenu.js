@@ -3,12 +3,13 @@ function mainMenuUpdate(){
   ctx.drawImage(images.background, 0, 0);
 }
 
+// called when the mouse is moved
 function mainMenuMouseMoved(event){
 
 }
 
-//doesnt work yet!!!!
+// called when the mouse is clicked
+// position: mouseX, mouseY
 function mainMenuMousePressed(event){
-  console.log("changing to slots");
-  currentView = "slots";
+
 }
