@@ -4,8 +4,30 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.3.14/polyfill.min.js"></script>
   </head>
   <body>
-    <canvas id="canvas" style="position:absolute;left:0;right:0;top:0;bottom:0;margin:auto">
-    </canvas>
+    <canvas id="canvas" style="position:absolute;left:0;right:0;top:0;bottom:0;margin:auto"></canvas>
     <script type="text/javascript" src="game.js"></script>
+    <script type="text/javascript" src="mainMenu.js"></script>
+    <script type="text/javascript" src="slots.js"></script>
+    <script type="text/javascript">
+      const viewFunctions = {
+        mainMenu: {
+          update: mainMenuUpdate,
+          moved: mainMenuMouseMoved,
+          pressed: mainMenuMousePressed
+        },
+        slots: {
+          update: slotsUpdate,
+          moved: slotsMouseMoved,
+          pressed: slotsMousePressed
+        }
+      };
+      
+      //execute game
+      init();
+      setInterval(()=>{
+        if(imagesLoaded < imagesNeeded) return;
+        viewFunctions[currentView].update();
+      }, 1000/framerate);
+    </script>
   </body>
 </html>
