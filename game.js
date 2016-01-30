@@ -35,8 +35,10 @@ function init(){
   });
   canvas.width = width;
   canvas.height = height;
-  ctx.font = "Press Start 2P";
+  ctx.font = "24px Lucida Console";
   ctx.textBaseline = "top";
   ctx.fillStyle = "#FFDD00"; // font color
   images.background = createImage("filler_background.png");
+  images.spinning = createImage("filler_spinning.png");
+  images.symbol = createImage("filler_symbol.png");
 }
