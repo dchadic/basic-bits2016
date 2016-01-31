@@ -24,38 +24,37 @@ function slotsUpdate(){
   if(payoutRemaining < -100){
     payoutRemaining += 10;
     coins -= 10;
-  }else if(payoutRemaining < -50){
-    payoutRemaining += 5;
-    coins -= 5;
-  }else if(payoutRemaining < -20){
-    payoutRemaining += 2;
-    coins -= 2;
+  }else if(payoutRemaining < -40){
+    payoutRemaining += 6;
+    coins -= 6;
+  }else if(payoutRemaining < -10){
+    payoutRemaining += 3;
+    coins -= 3;
   }else if(payoutRemaining < 0){
     payoutRemaining++;
     coins--;
-  }else if(payoutRemaining > 0){
-    payoutRemaining--;
-    coins++;
-  }else if(payoutRemaining > 20){
-    payoutRemaining -= 2;
-    coins += 2;
-  }else if(payoutRemaining > 50){
-    payoutRemaining -= 5;
-    coins += 5;
-  }else if(payoutRemaining > 100){
-    payoutRemaining -= 10;
-    coins += 10;
-  }else if(payoutRemaining > 400){
-    payoutRemaining -= 30;
-    coins += 30;
   }else if(payoutRemaining > 1500){
     payoutRemaining -= 120;
     coins += 120;
+  }else if(payoutRemaining > 400){
+    payoutRemaining -= 30;
+    coins += 30;
+  }else if(payoutRemaining > 100){
+    payoutRemaining -= 10;
+    coins += 10;
+  }else if(payoutRemaining > 40){
+    payoutRemaining -= 6;
+    coins += 6;
+  }else if(payoutRemaining > 10){
+    payoutRemaining -= 3;
+    coins += 3;
+  }else if(payoutRemaining > 0){
+    payoutRemaining--;
+    coins++;
   }
 
   ctx.fillStyle = (payoutRemaining < 0) ? "#FF0000" : "#000000"; // font color
-  let x = Math.abs(payoutRemaining % 10);
-  if(!(x==3 || x==4 || x==5)) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
+  if(payoutRemaining == 0 || frameCount > 3) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
 
   if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 96, 180);
   else ctx.drawImage(images.cats[slotOne][Math.floor(frameCount/5)], 96, 180);
@@ -143,17 +142,17 @@ function slotsMousePressed(event){
     // check which button pressed
     if(mouseY >= 380 && mouseY <= 402){
       if(mouseX >= 144 && mouseX <= 176){
-        if(coins >= 5){
+        if(coins >= 5 && coins + payoutRemaining >= 5){
           coins -= 5;
           bet = 5;
         } else return;
       } else if(mouseX >= 256 && mouseX <= 388){
-        if(coins >= 10){
+        if(coins >= 10 && coins + payoutRemaining >= 10){
           coins -= 10;
           bet = 10;
         } else return;
       } else if(mouseX >= 464 && mouseX <= 496){
-        if(coins >= 25){
+        if(coins >= 25 && coins + payoutRemaining >= 25){
           coins -= 25;
           bet = 25;
         } else return;

@@ -37,7 +37,7 @@ function init(){
   canvas.height = height;
   ctx.font = "24px Lucida Console";
   ctx.textBaseline = "top";
-  images.menubackground = [];// createImage("filler_background.png");
+  images.menubackground = [];
   for(var i =1;i < 9;i++){
     images.menubackground[i] = createImage("mainMenu/"+i+".png");
   }
