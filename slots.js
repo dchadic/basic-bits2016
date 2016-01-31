@@ -3,16 +3,12 @@
 var reelsSpinning = 0; // # of reels currently spinning
 var payoutRemaining = 0; // amount of coins that are being paid
 var coins = 100;
-<<<<<<< HEAD
 var spinFrame = 0;
-=======
 var winMaybe = 0;
 var whichPic = parseInt(Math.random()*9);
 var slotOne = 0;
 var slotTwo = 0;
 var slotThree = 0;
-
->>>>>>> origin/Carlos
 
 // called each frame in the slots view
 function slotsUpdate(){
@@ -24,21 +20,12 @@ function slotsUpdate(){
   }
   let x = payoutRemaining % 10;
   if(!(x==3 || x==4 || x==5)) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
-<<<<<<< HEAD
   if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 90, 180);
-  else ctx.drawImage(images.symbol, 70, 160);
+  else ctx.drawImage(images.cats[slotOne][1], 90, 180);
   if(reelsSpinning > 1) ctx.drawImage(images.spin[(spinFrame+4)%15], 250, 180);
-  else ctx.drawImage(images.symbol, 240, 160);
+  else ctx.drawImage(images.cats[slotTwo][1], 250, 180);
   if(reelsSpinning > 0) ctx.drawImage(images.spin[(spinFrame+8)%15], 410, 180);
-  else ctx.drawImage(images.symbol, 410, 160);
-=======
-  if(reelsSpinning > 2) ctx.drawImage(images.spinning, 70, 160);
-  else ctx.drawImage(images.cats[slotOne][1], 70, 160);
-  if(reelsSpinning > 1) ctx.drawImage(images.spinning, 240, 160);
-  else ctx.drawImage(images.cats[slotTwo][1], 240, 160);
-  if(reelsSpinning > 0) ctx.drawImage(images.spinning, 410, 160);
-  else ctx.drawImage(images.cats[slotThree][1], 410, 160);
->>>>>>> origin/Carlos
+  else ctx.drawImage(images.cats[slotThree][1], 410, 180);
 }
 
 // called when the mouse is moved
