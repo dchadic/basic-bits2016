@@ -45,7 +45,7 @@ function init(){
     images.spin.push(createImage("spin/"+i+".png"));
   }
   images.symbol = createImage("filler_symbol.png");
-  images.cats = [9];
+  images.cats = [];
   for (var i = 0; i <9; i++) {
      images.cats[i] = [4]
      for (var j = 1; j <= 4; j++) {
