@@ -37,7 +37,6 @@ function init(){
   canvas.height = height;
   ctx.font = "24px Lucida Console";
   ctx.textBaseline = "top";
-  ctx.fillStyle = "#FFDD00"; // font color
   images.menubackground = createImage("filler_background.png");
   images.slotsbackground = createImage("background.png");
   images.spin = [];

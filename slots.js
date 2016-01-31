@@ -1,6 +1,6 @@
 "use strict";
 
-var reelsSpinning = 0; // # of reels currently spinning
+var reelsSpinning = 3; // # of reels currently spinning
 var payoutRemaining = 0; // amount of coins that are being paid
 var coins = 100;
 var spinFrame = 0;
@@ -11,6 +11,8 @@ var slotTwo = 0;
 var slotThree = 0;
 var frameCount = 0;
 var bet = 0;
+const payouts = [[5, 20], [6, 25], [6, 20], [8, 30]]; // payouts 2 and 3 respectively of cats 0-3
+//               cookies  nice     sassy    follow ur <3
 
 // called each frame in the slots view
 function slotsUpdate(){
@@ -18,12 +20,44 @@ function slotsUpdate(){
   frameCount = frameCount % 20;
   ctx.drawImage(images.slotsbackground, 0, 0);
   spinFrame = (spinFrame + 1) % 15;
-  if(payoutRemaining > 0){
+
+  // give payout at rate according to amount
+  if(payoutRemaining < -100){
+    payoutRemaining += 10;
+    coins -= 10;
+  }else if(payoutRemaining < -50){
+    payoutRemaining += 5;
+    coins -= 5;
+  }else if(payoutRemaining < -20){
+    payoutRemaining += 2;
+    coins -= 2;
+  }else if(payoutRemaining < 0){
+    payoutRemaining++;
+    coins--;
+  }else if(payoutRemaining > 0){
     payoutRemaining--;
     coins++;
+  }else if(payoutRemaining > 20){
+    payoutRemaining -= 2;
+    coins += 2;
+  }else if(payoutRemaining > 50){
+    payoutRemaining -= 5;
+    coins += 5;
+  }else if(payoutRemaining > 100){
+    payoutRemaining -= 10;
+    coins += 10;
+  }else if(payoutRemaining > 400){
+    payoutRemaining -= 30;
+    coins += 30;
+  }else if(payoutRemaining > 1500){
+    payoutRemaining -= 120;
+    coins += 120;
   }
-  let x = payoutRemaining % 10;
+
+  ctx.fillStyle = (payoutRemaining < 0) ? "#FF0000" : "#000000"; // font color
+  let x = Math.abs(payoutRemaining % 10);
   if(!(x==3 || x==4 || x==5)) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
+
   if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 96, 180);
   else ctx.drawImage(images.cats[slotOne][Math.floor(frameCount/5)], 96, 180);
   if(reelsSpinning > 1) ctx.drawImage(images.spin[(spinFrame+4)%15], 256, 180);
@@ -31,6 +65,7 @@ function slotsUpdate(){
   if(reelsSpinning > 0) ctx.drawImage(images.spin[(spinFrame+8)%15], 416, 180);
   else ctx.drawImage(images.cats[slotThree][Math.floor(frameCount/5)], 416, 180);
 
+  // buttons for bets
   ctx.drawImage(images.five, 144, 380);
   ctx.drawImage(images.ten, 304, 380);
   ctx.drawImage(images.twentyfive, 464, 380);
@@ -41,11 +76,72 @@ function slotsMouseMoved(event){
 
 }
 
+function calcPayout(event){
+  // nums: array for counting cats
+  let nums = [];
+  nums[slotOne] = nums[slotOne] || 0;
+  nums[slotTwo] = nums[slotTwo] || 0;
+  nums[slotThree] = nums[slotThree] || 0;
+  nums[slotOne] += 1;
+  nums[slotTwo] += 1;
+  nums[slotThree] += 1;
+
+  if(nums[5]) return; // bathroom break: good day sir
+
+  // check cats 0 - 3
+  for(let i=0;i<4;i++){
+    if(nums[i]==2){
+      payoutRemaining = payouts[i][0]*bet;
+      return;
+    }
+    if(nums[i]==3){
+      payoutRemaining = payouts[i][1]*bet;
+      return;
+    }
+  }
+
+  // risk it all?
+  if(nums[4]==2){
+    payoutRemaining -= bet*bet;
+    return;
+  }
+  if(nums[4]==3){
+    payoutRemaining -= 3*bet*bet;
+    return;
+  }
+
+  // expensive taste: meh when betting 5 but great when betting 25
+  if(nums[6]==2){
+    payoutRemaining = bet*bet;
+    return;
+  }
+  if(nums[6]==3){
+    payoutRemaining = 4*bet*bet;
+    return;
+  }
+
+  // pay day: best linear payout
+  if(nums[7]==2){
+    payoutRemaining = 10*bet;
+    return;
+  }
+  if(nums[7]==3){
+    payoutRemaining = 40*bet;
+    return;
+  }
+
+  // pookie: jackpot!!!!!!
+  if(nums[8]==3){
+    payoutRemaining = 10*bet*bet;
+  }
+}
+
 // called when the mouse is clicked
 // position: mouseX, mouseY
 function slotsMousePressed(event){
   whichPic = parseInt(Math.random()*9);
   if(reelsSpinning == 0){ //if this is a new spin
+    // check which button pressed
     if(mouseY >= 380 && mouseY <= 402){
       if(mouseX >= 144 && mouseX <= 176){
         if(coins >= 5){
@@ -70,5 +166,5 @@ function slotsMousePressed(event){
   if(reelsSpinning == 3) slotOne = whichPic;
   if(reelsSpinning == 2) slotTwo = whichPic;
   if(reelsSpinning == 1) slotThree = whichPic;
-  if(reelsSpinning == 0) payoutRemaining += 20; // once all reels stop, payout
+  if(reelsSpinning == 0) calcPayout();
 }
