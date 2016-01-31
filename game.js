@@ -44,12 +44,14 @@ function init(){
   for(let i=0;i<15;i++){
     images.spin.push(createImage("spin/"+i+".png"));
   }
-  images.symbol = createImage("filler_symbol.png");
+  images.five = createImage("5.png");
+  images.ten = createImage("10.png");
+  images.twentyfive = createImage("25.png")
   images.cats = [];
   for (var i = 0; i <9; i++) {
-     images.cats[i] = [4]
+     images.cats[i] = [];
      for (var j = 1; j <= 4; j++) {
        images.cats[i][j-1] = createImage("cats/0"+i+"/sprite_"+j+".png");
      };
-   }; 
+   };
 }
