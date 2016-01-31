@@ -4,13 +4,12 @@ var reelsSpinning = 3; // # of reels currently spinning
 var payoutRemaining = 0; // amount of coins that are being paid
 var coins = 100;
 var spinFrame = 0;
-var winMaybe = 0;
 var whichPic = parseInt(Math.random()*9);
 var slotOne = 0;
 var slotTwo = 0;
 var slotThree = 0;
 var frameCount = 0;
-var bet = 0;
+var bet = 5;
 const payouts = [[5, 20], [6, 25], [6, 20], [8, 30]]; // payouts 2 and 3 respectively of cats 0-3
 //               cookies  nice     sassy    follow ur <3
 
