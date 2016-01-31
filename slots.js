@@ -3,21 +3,23 @@
 var reelsSpinning = 0; // # of reels currently spinning
 var payoutRemaining = 0; // amount of coins that are being paid
 var coins = 100;
+var spinFrame = 0;
 
 // called each frame in the slots view
 function slotsUpdate(){
   ctx.drawImage(images.slotsbackground, 0, 0);
+  spinFrame = (spinFrame + 1) % 15;
   if(payoutRemaining > 0){
     payoutRemaining--;
     coins++;
   }
   let x = payoutRemaining % 10;
   if(!(x==3 || x==4 || x==5)) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
-  if(reelsSpinning > 2) ctx.drawImage(images.spinning, 70, 160);
+  if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 90, 180);
   else ctx.drawImage(images.symbol, 70, 160);
-  if(reelsSpinning > 1) ctx.drawImage(images.spinning, 240, 160);
+  if(reelsSpinning > 1) ctx.drawImage(images.spin[(spinFrame+4)%15], 250, 180);
   else ctx.drawImage(images.symbol, 240, 160);
-  if(reelsSpinning > 0) ctx.drawImage(images.spinning, 410, 160);
+  if(reelsSpinning > 0) ctx.drawImage(images.spin[(spinFrame+8)%15], 410, 180);
   else ctx.drawImage(images.symbol, 410, 160);
 }
 

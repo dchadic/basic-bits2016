@@ -40,6 +40,9 @@ function init(){
   ctx.fillStyle = "#FFDD00"; // font color
   images.menubackground = createImage("filler_background.png");
   images.slotsbackground = createImage("background.png");
-  images.spinning = createImage("filler_spinning.png");
+  images.spin = [];
+  for(let i=0;i<15;i++){
+    images.spin.push(createImage("spin/"+i+".png"));
+  }
   images.symbol = createImage("filler_symbol.png");
 }
