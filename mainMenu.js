@@ -1,8 +1,10 @@
 "use strict";
-
+var frameCount = 0;
 // called once per frame for main main
 function mainMenuUpdate(){
-  ctx.drawImage(images.menubackground, 0, 0);
+  frameCount++;
+  frameCount = frameCount % 40;
+  ctx.drawImage(images.menubackground[Math.floor(frameCount/5+1)], 0, 0);
 }
 
 // called when the mouse is moved
