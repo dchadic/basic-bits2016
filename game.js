@@ -33,6 +33,7 @@ function init(){
     mouseY = event.clientY - rect.top;
     viewFunctions[currentView].moved(event);
   });
+  document.addEventListener("keyup", event => viewFunctions[currentView].keyup(event));
   canvas.width = width;
   canvas.height = height;
   ctx.font = "24px Lucida Console";

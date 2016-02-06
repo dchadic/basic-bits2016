@@ -17,3 +17,7 @@ function mainMenuMouseMoved(event){
 function mainMenuMousePressed(event){
   currentView = "slots";
 }
+
+function mainMenuKeyUp(event){
+  console.log(event.keycode);
+}

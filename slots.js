@@ -165,4 +165,16 @@ function slotsMousePressed(event){
   if(reelsSpinning == 2) slotTwo = whichPic;
   if(reelsSpinning == 1) slotThree = whichPic;
   if(reelsSpinning == 0) calcPayout();
+  console.log("hello");
+}
+//called when keys are pressed
+function slotsKeyUp(event){
+  console.log(event.keyCode);
+  if(event.keyCode >48 && event.keyCode < 58){
+    reelsSpinning = (reelsSpinning + 3) % 4 // stop a reel, or spin them all
+    if(reelsSpinning == 3) slotOne = event.keyCode - 49;
+    if(reelsSpinning == 2) slotTwo = event.keyCode - 49;
+    if(reelsSpinning == 1) slotThree = event.keyCode - 49;
+    if(reelsSpinning == 0) calcPayout();
+  }
 }
