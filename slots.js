@@ -1,15 +1,16 @@
 "use strict";
 
-var reelsSpinning = 3; // # of reels currently spinning
+var reelsSpinning = 0; // # of reels currently spinning
 var payoutRemaining = 0; // amount of coins that are being paid
 var coins = 100;
 var spinFrame = 0;
 var whichPic = parseInt(Math.random()*9);
-var slotOne = 0;
-var slotTwo = 0;
-var slotThree = 0;
+var slotOne = parseInt(Math.random()*9);
+var slotTwo = parseInt(Math.random()*9);
+var slotThree = parseInt(Math.random()*9);
 var frameCount = 0;
-var bet = 5;
+var bet = 0;
+var gameOver = false;
 const payouts = [[5, 20], [6, 25], [6, 20], [8, 30]]; // payouts 2 and 3 respectively of cats 0-3
 //               cookies  nice     sassy    follow ur <3
 
@@ -19,6 +20,18 @@ function slotsUpdate(){
   frameCount = frameCount % 20;
   ctx.drawImage(images.slotsbackground, 0, 0);
   spinFrame = (spinFrame + 1) % 15;
+
+  if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 96, 180);
+  else ctx.drawImage(images.cats[slotOne][Math.floor(frameCount/5)], 96, 180);
+  if(reelsSpinning > 1) ctx.drawImage(images.spin[(spinFrame+4)%15], 256, 180);
+  else ctx.drawImage(images.cats[slotTwo][Math.floor(frameCount/5)], 256, 180);
+  if(reelsSpinning > 0) ctx.drawImage(images.spin[(spinFrame+8)%15], 416, 180);
+  else ctx.drawImage(images.cats[slotThree][Math.floor(frameCount/5)], 416, 180);
+
+  // buttons for bets
+  ctx.drawImage(images.five, 144, 380);
+  ctx.drawImage(images.ten, 304, 380);
+  ctx.drawImage(images.twentyfive, 464, 380);
 
   // give payout at rate according to amount
   if(payoutRemaining < -100){
@@ -53,20 +66,23 @@ function slotsUpdate(){
     coins++;
   }
 
-  ctx.fillStyle = (payoutRemaining < 0) ? "#FF0000" : "#000000"; // font color
-  if(payoutRemaining == 0 || frameCount > 3) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
+  if(coins <= 0 && reelsSpinning == 0){
+    gameOver = true;
+    ctx.fillStyle = "#FF0000";
+    ctx.textBaseline = "bottom";
+    ctx.textAlign = "center";
+  }
+  if(gameOver){
+    ctx.font = "60px Lucida Console";
+    ctx.fillText("Game Over", 320, 100);
+    ctx.font = "40px Lucida Console";
+    ctx.fillText("Click to Start Over", 320, 145);
+  } else {
+    ctx.fillStyle = (payoutRemaining < 0) ? "#FF0000" : "#000000"; // font color
+    if(payoutRemaining == 0 || frameCount > 3) ctx.fillText("Coins: " + coins, 4, 4); //blink coins text if there is still payout remaining
 
-  if(reelsSpinning > 2) ctx.drawImage(images.spin[spinFrame], 96, 180);
-  else ctx.drawImage(images.cats[slotOne][Math.floor(frameCount/5)], 96, 180);
-  if(reelsSpinning > 1) ctx.drawImage(images.spin[(spinFrame+4)%15], 256, 180);
-  else ctx.drawImage(images.cats[slotTwo][Math.floor(frameCount/5)], 256, 180);
-  if(reelsSpinning > 0) ctx.drawImage(images.spin[(spinFrame+8)%15], 416, 180);
-  else ctx.drawImage(images.cats[slotThree][Math.floor(frameCount/5)], 416, 180);
-
-  // buttons for bets
-  ctx.drawImage(images.five, 144, 380);
-  ctx.drawImage(images.ten, 304, 380);
-  ctx.drawImage(images.twentyfive, 464, 380);
+    if(frameCount==0) saveGame(); // save game each second
+  }
 }
 
 // called when the mouse is moved
@@ -137,6 +153,10 @@ function calcPayout(event){
 // called when the mouse is clicked
 // position: mouseX, mouseY
 function slotsMousePressed(event){
+  if(gameOver){
+    resetGame();
+    return;
+  }
   whichPic = parseInt(Math.random()*9);
   if(reelsSpinning == 0){ //if this is a new spin
     // check which button pressed
@@ -165,7 +185,6 @@ function slotsMousePressed(event){
   if(reelsSpinning == 2) slotTwo = whichPic;
   if(reelsSpinning == 1) slotThree = whichPic;
   if(reelsSpinning == 0) calcPayout();
-  console.log("hello");
 }
 //called when keys are pressed
 function slotsKeyUp(event){
@@ -177,4 +196,17 @@ function slotsKeyUp(event){
     if(reelsSpinning == 1) slotThree = event.keyCode - 49;
     if(reelsSpinning == 0) calcPayout();
   }
+}
+
+function resetGame(){
+  ctx.font = "24px Lucida Console";
+  ctx.textBaseline = "top";
+  ctx.textAlign = "left";
+  reelsSpinning = 0; // # of reels currently spinning
+  payoutRemaining = 0; // amount of coins that are being paid
+  coins = 100;
+  slotOne = parseInt(Math.random()*9);
+  slotTwo = parseInt(Math.random()*9);
+  slotThree = parseInt(Math.random()*9);
+  gameOver = false;
 }

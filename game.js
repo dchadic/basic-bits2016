@@ -13,6 +13,19 @@ var imagesNeeded = 0; // # of images that still need to load
 var currentView = "mainMenu";
 var mouseX = 0;
 var mouseY = 0;
+//names of variables to be saved and loaded
+const saveVars = ["reelsSpinning", "payoutRemaining", "coins", "slotOne", "slotTwo", "slotThree", "bet"];
+
+function saveGame(){
+  for(let v of saveVars){
+    eval("localStorage."+v+"="+v);
+  }
+}
+function loadGame(){
+  for(let v of saveVars){
+    eval(v+"=localStorage."+v);
+  }
+}
 
 // function to create image objects
 // path: filename relative to the images/ directory
@@ -57,4 +70,5 @@ function init(){
        images.cats[i][j-1] = createImage("cats/0"+i+"/sprite_"+j+".png");
      };
    };
+   loadGame();
 }
