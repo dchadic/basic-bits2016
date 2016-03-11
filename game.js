@@ -20,10 +20,13 @@ function saveGame(){
   for(let v of saveVars){
     eval("localStorage."+v+"="+v);
   }
+  localStorage.gameSaved = true;
 }
 function loadGame(){
-  for(let v of saveVars){
-    eval(v+"=localStorage."+v);
+  if(localStorage.gameSaved){
+    for(let v of saveVars){
+      eval(v+"=localStorage."+v);
+    }
   }
 }
 
